@@ -15,16 +15,9 @@ def add_version():
     json_obj['versions'].append(version)
     with open('db.json', 'w') as f:
         json.dump(json_obj, f)
-    with open('db.json', 'r') as f:
-        tags = ""
-        for i in json.load(f)['versions']:
-            tags += f"<p>{i}</p>"
-        return tags
+    return str(json_obj['versions'][-1])
 
 @app.route("/get_version", methods=["GET"])
 def get_version():
     with open('db.json', 'r') as f:
-        tags = ""
-        for i in json.load(f)['versions']:
-            tags += f"<p>{i}</p>"
-        return tags
+        return json.load(f)['versions'][-1]
