@@ -14,7 +14,17 @@ def add_version():
         json_obj = json.load(f)
     json_obj['versions'].append(version)
     with open('db.json', 'w') as f:
-        json.dump(json_obj, f)
+        json.dump(json_obj, f, indent=4)
+    return str(json_obj['versions'][-1])
+
+@app.route("/remove_version", methods=["POST"])
+def remove_version():
+    version = request.args.get("version", type=str)
+    with open('db.json', 'r') as f:
+        json_obj = json.load(f)
+    json_obj['versions'].remove(version)
+    with open('db.json', 'w') as f:
+        json.dump(json_obj, f, indent=4)
     return str(json_obj['versions'][-1])
 
 @app.route("/get_version", methods=["GET"])
